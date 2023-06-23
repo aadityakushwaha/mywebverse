@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styles.css'; // Assuming the CSS code is in a file named 'styles.css'
+import './styles.css';
 
 const RegisterForm = () => {
   const themes = [
@@ -35,48 +35,93 @@ const RegisterForm = () => {
     }
   ];
 
-  const [selectedUserType, setSelectedUserType] = useState('student'); // Default user type is 'student'
+  const [selectedUserType, setSelectedUserType] = useState('student');
 
   const setTheme = (theme) => {
-    const root = document.querySelector(":root");
-    root.style.setProperty("--background", theme.background);
-    root.style.setProperty("--color", theme.color);
-    root.style.setProperty("--primary-color", theme.primaryColor);
-    root.style.setProperty("--glass-color", theme.glassColor);
-  };
-
-  const displayThemeButtons = () => {
-    const btnContainer = document.querySelector(".theme-btn-container");
-    themes.forEach((theme) => {
-      const div = document.createElement("div");
-      div.className = "theme-btn";
-      div.style.cssText = `background: ${theme.background}; width: 25px; height: 25px`;
-      btnContainer.appendChild(div);
-      div.addEventListener("click", () => setTheme(theme));
-    });
+    document.documentElement.style.setProperty("--background", theme.background);
+    document.documentElement.style.setProperty("--color", theme.color);
+    document.documentElement.style.setProperty("--primary-color", theme.primaryColor);
   };
 
   const handleUserTypeChange = (event) => {
     setSelectedUserType(event.target.value);
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    // Prepare the request body based on the selected user type
+    let requestBody = {
+      name: '',
+      regNo: '',
+      block: '',
+      password: '',
+      roomNo: ''
+    };
+
+    if (selectedUserType === 'student') {
+      requestBody = {
+        name: event.target.name.value,
+        regNo: event.target.regNo.value,
+        block: event.target.block.value,
+        password: event.target.password.value,
+        roomNo: event.target.roomNo.value
+      };
+    } else if (selectedUserType === 'faculty') {
+      // Add fields for faculty registration if needed
+    } else if (selectedUserType === 'warden') {
+      // Add fields for warden registration if needed
+    }
+
+   // Make the API request with the prepared request body
+    fetch('http://localhost:8080/api/v1/student/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          // Registration successful
+          console.log('Registration successful');
+          // Reset the form fields
+          event.target.reset();
+          // Display a success message to the user (you can use a toast or alert component)
+          alert('Registration successful');
+        } else {
+          // Registration failed
+          console.log('Registration failed');
+          // Display an error message to the user (you can use a toast or alert component)
+          alert('Registration failed');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
   return (
-    <body>
+    <div>
       <section className="container">
         <div className="login-container">
           <div className="circle circle-one"></div>
           <div className="form-container">
             <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" className="illustration" />
             <h1 className="opacity">Register</h1>
-            <form>
-              <input type="text" placeholder="Username" />
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="Email" />
-              <input type="text" placeholder="Phone Number" />
-              <input type="password" placeholder="Password" />
-              <input type="password" placeholder="Confirm Password" />
+            <form onSubmit={handleFormSubmit}>
+              {selectedUserType === 'student' && (
+                <div>
+                  <input type="text" name="name" placeholder="Name" required />
+                  <input type="text" name="regNo" placeholder="Registration Number" required />
+                  <input type="text" name="block" placeholder="Block (A, B, C, D)" required />
+                  <input type="password" name="password" placeholder="Password" required />
+                  <input type="text" name="roomNo" placeholder="Room Number" required />
+                </div>
+              )}
 
-              {/* Radio buttons for user type */}
+              {/* Add fields for faculty and warden registration if needed */}
+
               <div className="user-type-container">
                 <label>
                   <input
@@ -107,19 +152,27 @@ const RegisterForm = () => {
                 </label>
               </div>
 
-              <button className="opacity">Submit</button>
+              <button type="submit" className="opacity">Submit</button>
             </form>
 
             <div className="register-forget opacity">
               <a href="">SignIn</a>
-              {/* <a href="">FORGOT PASSWORD</a> */}
             </div>
           </div>
           <div className="circle circle-two"></div>
         </div>
-        <div className="theme-btn-container"></div>
+        <div className="theme-btn-container">
+          {themes.map((theme, index) => (
+            <div
+              key={index}
+              className="theme-btn"
+              style={{ background: theme.background, width: "25px", height: "25px" }}
+              onClick={() => setTheme(theme)}
+            ></div>
+          ))}
+        </div>
       </section>
-    </body>
+    </div>
   );
 };
 
