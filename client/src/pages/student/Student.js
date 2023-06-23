@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
 import { Sidebar } from "../../components/sidebar/Sidebar";
 import ProfilePage from "../../components/profile/Profile";
 
-function Student() {
+function Student({handleLogout}) {
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
     const handleSidebarCollapse = () => {
@@ -13,7 +12,7 @@ function Student() {
         <div className={`grid ${isSidebarCollapsed ? "grid-cols-1" : "grid-cols-3"}`}>
             {!isSidebarCollapsed && (
                 <div className="col-span-1">
-                    <Sidebar />
+                    <Sidebar handleLogout={handleLogout}/>
                 </div>
             )}
             <div className="col-span-1 lg:col-span-2">

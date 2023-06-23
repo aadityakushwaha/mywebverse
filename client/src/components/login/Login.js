@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './styles.css'; // Assuming the CSS code is in a file named 'styles.css'
+import { useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
+function LoginForm({ handleLogin }) {
+  const navigate = useNavigate();
   const themes = [
     {
       background: "#1A1A2E",
@@ -36,6 +38,8 @@ const LoginForm = () => {
   ];
 
   const [selectedUserType, setSelectedUserType] = useState('faculty'); // Default user type is 'faculty'
+  const [username, setUsername] = useState(''); // State for username
+  const [password, setPassword] = useState('');
 
   const setTheme = (theme) => {
     const root = document.querySelector(":root");
@@ -60,17 +64,77 @@ const LoginForm = () => {
     setSelectedUserType(event.target.value);
   };
 
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Code to handle form submission and obtain the token...
+    // Replace this code with your actual authentication logic
+
+    handleLogin(event,selectedUserType);
+
+    if (selectedUserType == "student") {
+      navigate('/student');
+    }
+    else if (selectedUserType == "faculty") {
+      navigate('/faculty');
+    }
+
+
+  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+
+  //   // API endpoint and request payload
+  //   const url = '/api/v1/student/auth/login';
+  //   const payload = {
+  //     regNo: username,
+  //     password: password
+  //   };
+
+  //   // Make the API request
+  //   fetch(url, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(payload)
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       // Handle the API response
+  //       console.log(data); // You can do further processing here
+
+  //       // Store the token and user type in localStorage
+  //       localStorage.setItem('token', data.token);
+  //       localStorage.setItem('userType', data.data.userType);
+  //     })
+  //     .catch(error => {
+  //       // Handle any errors
+  //       console.error('Error:', error);
+  //     });
+  // };
+
+
+
   return (
-    <body>
+    <div>
       <section className="container">
         <div className="login-container">
           <div className="circle circle-one"></div>
           <div className="form-container">
             {/* <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" className="illustration" /> */}
             <h1 className="opacity">LOGIN</h1>
-            <form>
-              <input type="text" placeholder="USERNAME" />
-              <input type="password" placeholder="PASSWORD" />
+            <form onSubmit={handleSubmit}>
+              <input type="text" placeholder="USERNAME" value={username} onChange={handleUsernameChange} />
+              <input type="password" placeholder="PASSWORD" value={password} onChange={handlePasswordChange} />
 
               {/* Radio buttons for user type */}
               <div className="user-type-container">
@@ -114,7 +178,7 @@ const LoginForm = () => {
         </div>
         <div className="theme-btn-container"></div>
       </section>
-    </body>
+    </div>
   );
 };
 

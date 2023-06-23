@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+import { handleLogout } from "../../authutils";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
@@ -6,8 +8,19 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./style.css";
+import { useNavigate } from 'react-router-dom';
 
-export function Sidebar() {
+
+export function Sidebar({ handleLogout }) {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        // Code to handle form submission and obtain the token...
+
+        // Store token and user type in browser's localStorage
+        handleLogout();
+        navigate('/signin');
+    };
     const menus = [
         { name: "dashboard", link: "/", icon: MdOutlineDashboard },
         { name: "Leave", link: "/leave", icon: AiOutlineUser, margin: true },
@@ -59,7 +72,7 @@ export function Sidebar() {
 
             </div>
             {
-                open ? <Link to="/logout" className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-80">Logout</Link>
+                open ? <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-80" onClick={handleClick}>Logout</button>
                     : <></>
             }
         </div>
