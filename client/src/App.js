@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginForm from './component/login/Login';
-import RegisterForm from './component/register/Register';
+import LoginForm from './components/login/Login';
+import RegisterForm from './components/register/Register';
 import Student from "./pages/student/Student";
 
 function App() {
