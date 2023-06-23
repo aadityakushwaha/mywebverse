@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { handleLogout } from "../../authutils";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";

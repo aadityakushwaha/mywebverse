@@ -47,7 +47,7 @@ function App() {
           <Route path="/signin" element={authenticated ? <Navigate to="/student" /> : <LoginForm handleLogin={handleLogin} />} />
           <Route path="/register" element={authenticated ? <Navigate to="/student" /> : <RegisterForm />} />
           <Route path="/student" element={authenticated ? <Student handleLogout={handleLogout} /> : <Navigate to="/signin" />} />
-          <Route path="/leave" element={isLoggedIn ? <Leave /> : <Navigate to="/signin" />} />
+          <Route path="/leave" element={authenticated ? <Leave /> : <Navigate to="/signin" />} />
           <Route path="/" element={authenticated ? <Student handleLogout={handleLogout} /> : <Navigate to="/signin" />} />
         </Routes>
       </div>
