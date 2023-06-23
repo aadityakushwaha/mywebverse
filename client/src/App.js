@@ -5,7 +5,7 @@ import RegisterForm from './component/register/Register';
 import Student from "./pages/student/Student";
 
 function App() {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   return (
     <Router>
       <div className="App">

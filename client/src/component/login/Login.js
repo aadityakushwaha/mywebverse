@@ -35,7 +35,7 @@ const LoginForm = () => {
     }
   ];
 
-const [selectedUserType, setSelectedUserType] = useState('faculty'); // Default user type is 'faculty'
+  const [selectedUserType, setSelectedUserType] = useState('faculty'); // Default user type is 'faculty'
 
   const setTheme = (theme) => {
     const root = document.querySelector(":root");
@@ -59,6 +59,8 @@ const [selectedUserType, setSelectedUserType] = useState('faculty'); // Default 
   const handleUserTypeChange = (event) => {
     setSelectedUserType(event.target.value);
   };
+
+  
 
   return (
     <body>
