@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.css'; // Assuming the CSS code is in a file named 'styles.css'
 
 const LoginForm = () => {
@@ -35,6 +35,8 @@ const LoginForm = () => {
     }
   ];
 
+const [selectedUserType, setSelectedUserType] = useState('faculty'); // Default user type is 'faculty'
+
   const setTheme = (theme) => {
     const root = document.querySelector(":root");
     root.style.setProperty("--background", theme.background);
@@ -54,6 +56,10 @@ const LoginForm = () => {
     });
   };
 
+  const handleUserTypeChange = (event) => {
+    setSelectedUserType(event.target.value);
+  };
+
   return (
     <body>
       <section className="container">
@@ -65,6 +71,29 @@ const LoginForm = () => {
             <form>
               <input type="text" placeholder="USERNAME" />
               <input type="password" placeholder="PASSWORD" />
+
+              {/* Radio buttons for user type */}
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    value="faculty"
+                    checked={selectedUserType === 'faculty'}
+                    onChange={handleUserTypeChange}
+                  />
+                  Faculty Warden
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="student"
+                    checked={selectedUserType === 'student'}
+                    onChange={handleUserTypeChange}
+                  />
+                  Student
+                </label>
+              </div>
+
               <button className="opacity">SUBMIT</button>
             </form>
             <div className="register-forget opacity">
@@ -81,4 +110,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
