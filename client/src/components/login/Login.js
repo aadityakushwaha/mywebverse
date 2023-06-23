@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './styles.css'; // Assuming the CSS code is in a file named 'styles.css'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function LoginForm({ handleLogin }) {
   const navigate = useNavigate();
@@ -72,114 +72,125 @@ function LoginForm({ handleLogin }) {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // Code to handle form submission and obtain the token...
-    // Replace this code with your actual authentication logic
-
-    handleLogin(event,selectedUserType);
-
-    if (selectedUserType == "student") {
-      navigate('/student');
-    }
-    else if (selectedUserType == "faculty") {
-      navigate('/faculty');
-    }
-
-
-  };
   // const handleSubmit = (event) => {
   //   event.preventDefault();
 
-  //   // API endpoint and request payload
-  //   const url = '/api/v1/student/auth/login';
-  //   const payload = {
-  //     regNo: username,
-  //     password: password
-  //   };
+  //   // Code to handle form submission and obtain the token...
+  //   // Replace this code with your actual authentication logic
 
-  //   // Make the API request
-  //   fetch(url, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(payload)
-  //   })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       // Handle the API response
-  //       console.log(data); // You can do further processing here
+  //   handleLogin(event,selectedUserType);
 
-  //       // Store the token and user type in localStorage
-  //       localStorage.setItem('token', data.token);
-  //       localStorage.setItem('userType', data.data.userType);
-  //     })
-  //     .catch(error => {
-  //       // Handle any errors
-  //       console.error('Error:', error);
-  //     });
+  //   if (selectedUserType == "student") {
+  //     navigate('/student');
+  //   }
+  //   else if (selectedUserType == "faculty") {
+  //     navigate('/faculty');
+  //   }
+
+
   // };
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
+    // API endpoint and request payload
 
+    const url = `http://localhost:8181/api/v1/${selectedUserType}/auth/login`;
+    const payload = {
+      regNo: username,
+      password: password
+    };
 
-  return (
-    <div>
-      <section className="container">
-        <div className="login-container">
-          <div className="circle circle-one"></div>
-          <div className="form-container">
-            {/* <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" className="illustration" /> */}
-            <h1 className="opacity">LOGIN</h1>
-            <form onSubmit={handleSubmit}>
-              <input type="text" placeholder="USERNAME" value={username} onChange={handleUsernameChange} />
-              <input type="password" placeholder="PASSWORD" value={password} onChange={handlePasswordChange} />
+    // Make the API request
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => {
+        if (response.status === 200) {
+          console.log(response);
+          handleLogin(event, selectedUserType);
+          navigate(`/${selectedUserType}`);
 
-              {/* Radio buttons for user type */}
-              <div className="user-type-container">
-                <label>
-                  <input
-                    type="radio"
-                    value="faculty"
-                    checked={selectedUserType === 'faculty'}
-                    onChange={handleUserTypeChange}
-                  />
-                  Faculty
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="student"
-                    checked={selectedUserType === 'student'}
-                    onChange={handleUserTypeChange}
-                  />
-                  Student
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="warden"
-                    checked={selectedUserType === 'warden'}
-                    onChange={handleUserTypeChange}
-                  />
-                  Warden
-                </label>
-              </div>
+        }
+      })
+      .then(data => console.log(data))
+    //.then(data => {
+    //console.log(data.status);
 
-              <button className="opacity">SUBMIT</button>
-            </form>
-            <div className="register-forget opacity">
-              <a href="">REGISTER</a>
-              <a href="">FORGOT PASSWORD</a>
-            </div>
-          </div>
-          <div className="circle circle-two"></div>
-        </div>
-        <div className="theme-btn-container"></div>
-      </section>
-    </div>
+    // Handle the API response
+    //You can do further processing here
+
+    // Store the token and user type in localStorage
+    //localStorage.setItem('token', data.token);
+    //localStorage.setItem('userType', data.data.userType);
+  
+      .catch (error => {
+    // Handle any errors
+    console.error('Error:', error);
+  }
   );
+};
+
+
+
+return (
+  <div>
+    <section className="container">
+      <div className="login-container">
+        <div className="circle circle-one"></div>
+        <div className="form-container">
+          {/* <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" className="illustration" /> */}
+          <h1 className="opacity">LOGIN</h1>
+          <form onSubmit={handleSubmit}>
+            <input type="text" placeholder="USERNAME" value={username} onChange={handleUsernameChange} />
+            <input type="password" placeholder="PASSWORD" value={password} onChange={handlePasswordChange} />
+
+            {/* Radio buttons for user type */}
+            <div className="user-type-container">
+              <label>
+                <input
+                  type="radio"
+                  value="faculty"
+                  checked={selectedUserType === 'faculty'}
+                  onChange={handleUserTypeChange}
+                />
+                Faculty
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="student"
+                  checked={selectedUserType === 'student'}
+                  onChange={handleUserTypeChange}
+                />
+                Student
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="warden"
+                  checked={selectedUserType === 'warden'}
+                  onChange={handleUserTypeChange}
+                />
+                Warden
+              </label>
+            </div>
+
+            <button className="opacity">SUBMIT</button>
+          </form>
+          <div className="register-forget opacity">
+            <Link to="/register">REGISTER</Link>
+          </div>
+        </div>
+        <div className="circle circle-two"></div>
+      </div>
+      <div className="theme-btn-container"></div>
+    </section>
+  </div>
+);
 };
 
 export default LoginForm;

@@ -10,7 +10,7 @@ import "./style.css";
 import { useNavigate } from 'react-router-dom';
 
 
-export function Sidebar({ handleLogout }) {
+export function Sidebar({ handleLogout,...props }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -20,15 +20,8 @@ export function Sidebar({ handleLogout }) {
         handleLogout();
         navigate('/signin');
     };
-    const menus = [
-        { name: "dashboard", link: "/", icon: MdOutlineDashboard },
-        { name: "Leave", link: "/leave", icon: AiOutlineUser, margin: true },
-        { name: "complaint", link: "/complaint", icon: FiMessageSquare },
-        { name: "room details", link: "/roomdetails", icon: TbReportAnalytics },
-        { name: "mess change", link: "/messchange", icon: FiFolder },
-        { name: "course", link: "/course", icon: FiShoppingCart },
-        { name: "events", link: "/events", icon: AiOutlineHeart },
-    ];
+    const menus = props.dataarr;
+    console.log(props.dataarr);
     const [open, setOpen] = useState(true);
     return (
         <div

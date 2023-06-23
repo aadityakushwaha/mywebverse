@@ -1,6 +1,38 @@
 import React from 'react';
 
-const ProfileCard = () => {
+const ProfileCard = (props) => {
+
+
+  const url = `http://localhost:8181/api/v1/${props.role}/me`;
+  
+
+  // Make the API request
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify("token")
+  })
+    .then(response => {
+      if (response.status === 200) {
+        console.log(response);
+      }
+    })
+    //.then(data => {
+    //console.log(data.status);
+
+    // Handle the API response
+    //You can do further processing here
+
+    // Store the token and user type in localStorage
+    //localStorage.setItem('token', data.token);
+    //localStorage.setItem('userType', data.data.userType);
+
+    .catch(error => {
+      // Handle any errors
+      console.error('Error:', error);
+    });
   return (
     <div className="w-full  px-4 mx-auto">
       <div className="relative flex flex-col min-w-0 break-words bg-transparent w-full mb-6 shadow-xl rounded-lg mt-16 p-6 backdrop-filter backdrop-blur-lg bg-opacity-10">
@@ -65,7 +97,7 @@ const ProfileCard = () => {
                   feel with a solid groove structure. An artist of considerable
                   range.
                 </p>
-               
+
               </div>
             </div>
           </div>

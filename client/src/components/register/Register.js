@@ -36,6 +36,7 @@ const RegisterForm = () => {
   ];
 
   const [selectedUserType, setSelectedUserType] = useState('student');
+  const [isHOD, setIsHOD] = useState(false);
 
   const setTheme = (theme) => {
     document.documentElement.style.setProperty("--background", theme.background);
@@ -47,17 +48,15 @@ const RegisterForm = () => {
     setSelectedUserType(event.target.value);
   };
 
+  const handleHODChange = (event) => {
+    setIsHOD(event.target.checked);
+  };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
     // Prepare the request body based on the selected user type
-    let requestBody = {
-      name: '',
-      regNo: '',
-      block: '',
-      password: '',
-      roomNo: ''
-    };
+    let requestBody = {};
 
     if (selectedUserType === 'student') {
       requestBody = {
@@ -68,13 +67,16 @@ const RegisterForm = () => {
         roomNo: event.target.roomNo.value
       };
     } else if (selectedUserType === 'faculty') {
-      // Add fields for faculty registration if needed
-    } else if (selectedUserType === 'warden') {
-      // Add fields for warden registration if needed
+      requestBody = {
+        name: event.target.name.value,
+        empId: event.target.empId.value,
+        password: event.target.password.value,
+        isHOD: isHOD
+      };
     }
 
-   // Make the API request with the prepared request body
-    fetch('http://localhost:8080/api/v1/student/auth/register', {
+    // Make the API request with the prepared request body
+    fetch(`http://localhost:8000/api/v1/${selectedUserType}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -120,7 +122,23 @@ const RegisterForm = () => {
                 </div>
               )}
 
-              {/* Add fields for faculty and warden registration if needed */}
+              {selectedUserType === 'faculty' && (
+                <div>
+                  <input type="text" name="name" placeholder="Name" required />
+                  <input type="text" name="empId" placeholder="Employee ID" required />
+                  <input type="password" name="password" placeholder="Password" required />
+                  <input type="checkbox" name="isHOD" checked={isHOD} onChange={handleHODChange} />
+                  <label htmlFor="isHOD">HOD Status</label>
+                </div>
+              )}
+
+              {/* {selectedUserType === 'warden' && ( */}
+              {/*   <div> */}
+              {/*     <input type="text" name="name" placeholder="Name" required /> */}
+              {/*     <input type="text" name="block" placeholder="Block (A, B, C, D)" required /> */}
+              {/*     <input type="password" name="password" placeholder="Password" required /> */}
+              {/*   </div> */}
+              {/* )} */}
 
               <div className="user-type-container">
                 <label>
@@ -141,15 +159,15 @@ const RegisterForm = () => {
                   />
                   Faculty
                 </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="warden"
-                    checked={selectedUserType === 'warden'}
-                    onChange={handleUserTypeChange}
-                  />
-                  Warden
-                </label>
+                {/* <label> */}
+                {/*   <input */}
+                {/*     type="radio" */}
+                {/*     value="warden" */}
+                {/*     checked={selectedUserType === 'warden'} */}
+                {/*     onChange={handleUserTypeChange} */}
+                {/*   /> */}
+                {/*   Warden */}
+                {/* </label> */}
               </div>
 
               <button type="submit" className="opacity">Submit</button>
@@ -177,4 +195,3 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
-
