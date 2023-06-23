@@ -30,7 +30,7 @@ export function Sidebar() {
                     onClick={() => setOpen(!open)}
                 />
             </div>
-            <div className="mt-4 flex flex-col gap-4 relative">
+            <div className="mt-4 flex flex-col gap-4 relative backdrop-filter backdrop-blur-lg bg-opacity-5">
                 {menus?.map((menu, i) => (
                     <Link
                         to={menu?.link}

@@ -60,8 +60,6 @@ const LoginForm = () => {
     setSelectedUserType(event.target.value);
   };
 
-  
-
   return (
     <body>
       <section className="container">
@@ -75,7 +73,7 @@ const LoginForm = () => {
               <input type="password" placeholder="PASSWORD" />
 
               {/* Radio buttons for user type */}
-              <div>
+              <div className="user-type-container">
                 <label>
                   <input
                     type="radio"
@@ -83,7 +81,7 @@ const LoginForm = () => {
                     checked={selectedUserType === 'faculty'}
                     onChange={handleUserTypeChange}
                   />
-                  Faculty Warden
+                  Faculty
                 </label>
                 <label>
                   <input
@@ -93,6 +91,15 @@ const LoginForm = () => {
                     onChange={handleUserTypeChange}
                   />
                   Student
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="warden"
+                    checked={selectedUserType === 'warden'}
+                    onChange={handleUserTypeChange}
+                  />
+                  Warden
                 </label>
               </div>
 
@@ -112,3 +119,4 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+

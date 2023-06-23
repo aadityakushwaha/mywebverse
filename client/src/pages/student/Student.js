@@ -10,7 +10,7 @@ function Student() {
         setIsSidebarCollapsed(!isSidebarCollapsed);
     };
     return (
-        <div className={`grid ${isSidebarCollapsed ? "grid-cols-1" : "grid-cols-3"} gap-4`}>
+        <div className={`grid ${isSidebarCollapsed ? "grid-cols-1" : "grid-cols-3"}`}>
             {!isSidebarCollapsed && (
                 <div className="col-span-1">
                     <Sidebar />

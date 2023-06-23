@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.css'; // Assuming the CSS code is in a file named 'styles.css'
 
 const RegisterForm = () => {
@@ -35,6 +35,8 @@ const RegisterForm = () => {
     }
   ];
 
+  const [selectedUserType, setSelectedUserType] = useState('student'); // Default user type is 'student'
+
   const setTheme = (theme) => {
     const root = document.querySelector(":root");
     root.style.setProperty("--background", theme.background);
@@ -54,6 +56,10 @@ const RegisterForm = () => {
     });
   };
 
+  const handleUserTypeChange = (event) => {
+    setSelectedUserType(event.target.value);
+  };
+
   return (
     <body>
       <section className="container">
@@ -69,8 +75,41 @@ const RegisterForm = () => {
               <input type="text" placeholder="Phone Number" />
               <input type="password" placeholder="Password" />
               <input type="password" placeholder="Confirm Password" />
+
+              {/* Radio buttons for user type */}
+              <div className="user-type-container">
+                <label>
+                  <input
+                    type="radio"
+                    value="student"
+                    checked={selectedUserType === 'student'}
+                    onChange={handleUserTypeChange}
+                  />
+                  Student
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="faculty"
+                    checked={selectedUserType === 'faculty'}
+                    onChange={handleUserTypeChange}
+                  />
+                  Faculty
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="warden"
+                    checked={selectedUserType === 'warden'}
+                    onChange={handleUserTypeChange}
+                  />
+                  Warden
+                </label>
+              </div>
+
               <button className="opacity">Submit</button>
             </form>
+
             <div className="register-forget opacity">
               <a href="">SignIn</a>
               {/* <a href="">FORGOT PASSWORD</a> */}

@@ -185,6 +185,16 @@ h1 {
     width: 40px !important;
 }
 
+.container .form-container .user-type-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.container .form-container .user-type-container label {
+  margin-right: 1rem;
+}
+
 @keyframes wobble {
     0% {
         transform: scale(1.025);
