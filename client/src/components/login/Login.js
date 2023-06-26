@@ -94,7 +94,7 @@ function LoginForm({ handleLogin }) {
 
     // API endpoint and request payload
 
-    const url = `http://localhost:8181/api/v1/${selectedUserType}/auth/login`;
+    const url = `http://localhost:8282/api/v1/${selectedUserType}/auth/login`;
     const payload = {
       regNo: username,
       password: password

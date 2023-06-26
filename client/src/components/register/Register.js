@@ -76,7 +76,7 @@ const RegisterForm = () => {
     }
 
     // Make the API request with the prepared request body
-    fetch(`http://localhost:8000/api/v1/${selectedUserType}/auth/register`, {
+    fetch(`http://localhost:8282/api/v1/${selectedUserType}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
